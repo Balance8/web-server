@@ -1,11 +1,13 @@
 const path = require('path');
 const express = require('express');
+const hbs = require('hbs');
 
 const app = express();
 
 // Define Paths for express config
 const publicDirectoryPath = path.join(__dirname, '../public');
-const viewsPath = path.join(__dirname, '../templates/');
+const viewsPath = path.join(__dirname, '../templates/views');
+// const partialsPath = path.join(__dirname, '../templates/partials');
 
 // setup handbars engine and views location
 app.set('view engine', 'hbs');
@@ -33,6 +35,9 @@ app.get('/help', (req, res) => {
     title: 'Help',
     name: 'Michael Slocum'
   });
+});
+app.get('*', (req, res) => {
+  res.send('404 page');
 });
 
 app.get('/weather', (req, res) => {
