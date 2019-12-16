@@ -7,7 +7,27 @@ console.log(path.join(__dirname, '../public'));
 const app = express();
 const publicDirectoryPath = path.join(__dirname, '../public');
 
+app.set('view engine', 'hbs');
 app.use(express.static(publicDirectoryPath));
+
+app.get('', (req, res) => {
+  res.render('index', {
+    title: 'weather app',
+    name: 'Michael Slocum'
+  });
+});
+app.get('/about', (req, res) => {
+  res.render('about', {
+    title: 'About Me',
+    name: 'Michael Slocum'
+  });
+});
+app.get('/help', (req, res) => {
+  res.render('help', {
+    title: 'Help',
+    name: 'Michael Slocum'
+  });
+});
 
 app.get('/weather', (req, res) => {
   res.send({
