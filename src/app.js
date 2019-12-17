@@ -48,21 +48,24 @@ app.get('/weather', (req, res) => {
     });
   }
 
-  geocode(req.query.address, (error, { latitude, longitude, location }) => {
-    if (error) {
-      return res.send({ error });
-    }
-    forecast(latitude, longitude, (error, { currently }) => {
+  geocode(
+    req.query.address,
+    (error, { latitude, longitude, location } = {}) => {
       if (error) {
         return res.send({ error });
       }
-      res.send({
-        forecast: currently,
-        location,
-        address: req.query.address
+      forecast(latitude, longitude, (error, { currently }) => {
+        if (error) {
+          return res.send({ error });
+        }
+        res.send({
+          forecast: currently,
+          location,
+          address: req.query.address
+        });
       });
-    });
-  });
+    }
+  );
 });
 
 app.get('/products', (req, res) => {
