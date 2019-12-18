@@ -1,7 +1,16 @@
 console.log('Client side javascript file is loaded!');
 
-fetch('http://localhost:3000/weather?address=marina%20del%20rey').then(
-  response => {
+const weatherForm = document.querySelector('form');
+const search = document.querySelector('input');
+
+weatherForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const location = search.value;
+
+  fetch(
+    `http://localhost:3000/weather?address=${encodeURIComponent(location)}`
+  ).then(response => {
     response.json().then(data => {
       if (data.error) {
         console.log(data.error);
@@ -10,5 +19,6 @@ fetch('http://localhost:3000/weather?address=marina%20del%20rey').then(
         console.log(data.forecast);
       }
     });
-  }
-);
+  });
+  console.log(location);
+});
